@@ -5,8 +5,12 @@ const express = require("express");
 const { FBCoffee, FBImgProduct, FBCart } = require("./firebaseFun");
 const {BigNumber} = require("bignumber.js");
 const { processQuery } = require("./function");
+const cors = require("cors");
 
 const app = express();
+
+app.use(cors());
+
 app.get("/", (req, res) => {
   res.send("hello");
 })
