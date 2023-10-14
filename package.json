@@ -1,16 +1,22 @@
 {
-  "name": "server-tc-store",
-  "version": "0.0.0",
-  "private": true,
+  "name": "nodejsserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.1"
+    "bignumber.js": "^9.1.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "firebase-admin": "10.0.2",
+    "jsonwebtoken": "^9.0.0",
+    "jwt-decode": "^3.1.2",
+    "ngrok": "^4.3.0",
+    "nodemon": "^3.0.1"
   }
 }

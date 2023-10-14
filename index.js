@@ -1,41 +1,64 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
-var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+const express = require("express");
+const { FBCoffee, FBImgProduct, FBCart } = require("./firebaseFun");
+const {BigNumber} = require("bignumber.js");
+const { processQuery } = require("./function");
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+const app = express();
+app.get("/", (req, res) => {
+  res.send("hello");
+})
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.get("/all-coffee",async (req, res) => { 
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+    const data=await FBCoffee.getAllData()
+
+   const dataProcess=processQuery(data,req.query)
+    res.send({
+       ...dataProcess,
+        status:200
+    });
+})
+
+app.get("/coffee/list-imgs",async (req, res) => {
+    const data=await FBImgProduct.getAllData()
+    res.send({
+        data,
+        status:200
+    });
+})
+
+app.get("/coffee/list-img/:idProduct",async (req, res) => {
+    const data=await FBImgProduct.getDataByQuery('idProduct','==',req.params?.idProduct||'oVS9HTgrvQe1St2nPm4Y')    
+    res.send({
+        data,
+        status:200
+    });
+})
+
+app.get("/cart/list-img",async (req, res) => {
+    const data=await FBCoffee.getAllData()
+    res.send({
+        data,
+        status:200
+    });
+})
+
+app.post("/cart-user",async (req, res) => {
+    console.log({req:req.body});
+    console.log({query:req.query});
+    const data=await FBCart.getAllData()
+    // console.log({data});
+    res.send({
+        data,
+        status:200
+    })
+})
+ 
+
+app.listen(process.env.PORT || 3002, () => {
+  // app.listen(3002, () => {
+  console.log("listening on port", process.env.PORT || 3002);
 });
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-module.exports = app;
