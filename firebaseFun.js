@@ -38,11 +38,13 @@ const FBUser=FirebaseFun(FB.user)
 const FBCart=FirebaseFun(FB.cart)
 const FBComment=FirebaseFun(FB.comment)
 const FBImgProduct=FirebaseFun(FB.imageProduct)
+const FBTypeProduct=FirebaseFun(FB.typeProduct)
 
 module.exports={
     FBCoffee,
     FBUser,
     FBCart,
     FBComment,
-    FBImgProduct
+    FBImgProduct,
+    FBTypeProduct
 }

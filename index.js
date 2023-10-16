@@ -2,7 +2,7 @@
 
 
 const express = require("express");
-const { FBCoffee, FBImgProduct, FBCart } = require("./firebaseFun");
+const { FBCoffee, FBImgProduct, FBCart, FBTypeProduct } = require("./firebaseFun");
 const {BigNumber} = require("bignumber.js");
 const { processQuery } = require("./function");
 const cors = require("cors");
@@ -12,8 +12,27 @@ const app = express();
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("hello");
+  res.send({
+    message:'hello'
+  });
 })
+
+app.get("/menu-category",async (req, res) => { 
+
+    let data=await FBTypeProduct.getAllData()
+    data = data.map(item=>{
+      return {
+        key:item.key,
+        name:item.name
+      }
+    })
+
+     res.send({
+        data,
+        status:200
+    });
+})
+
 
 app.get("/all-coffee",async (req, res) => { 
 
