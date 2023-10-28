@@ -6,7 +6,8 @@ const FB={
     build:'Build',
     otherHome:'OtherHome',
     typeProduct:'TypeProduct',
-    user:'user'
+    user:'user',
+    'productShop':'ProductShop'
 }
 
 module.exports={

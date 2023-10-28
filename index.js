@@ -1,8 +1,5 @@
-
-
-
 const express = require("express");
-const { FBCoffee, FBImgProduct, FBCart, FBTypeProduct } = require("./firebaseFun");
+const { FBCoffee, FBImgProduct, FBCart, FBTypeProduct, FBProductShop } = require("./firebaseFun");
 const {BigNumber} = require("bignumber.js");
 const { processQuery } = require("./function");
 const cors = require("cors");
@@ -43,6 +40,51 @@ app.get("/all-coffee",async (req, res) => {
        ...dataProcess,
         status:200
     });
+})
+
+app.get("/all-product",async (req, res) => { 
+    console.log({req:req.query});
+    if(Object.keys(req.query).length>0){
+        const arrQuery=Object.entries(req.query).map(([key,value])=>{
+            if(key==='largerPrice'){
+                return {
+                    key:'price',
+                    match:'>=',
+                    value
+                }
+            }
+            if(key==='smallerPrice'){
+                return {
+                    key:'price',
+                    match:'<=',
+                    value
+    
+                }
+            }
+            return {
+                key,
+                match:'in',
+                value:value?.split(',')
+            }
+            
+        })
+        const data=await FBProductShop.getDataByListQuery(arrQuery)
+
+        const dataProcess=processQuery(data,req.query)
+         res.send({
+            ...dataProcess,
+             status:200
+         });
+    }else{
+        const data=await FBProductShop.getAllData()
+
+        const dataProcess=processQuery(data,req.query)
+         res.send({
+            ...dataProcess,
+             status:200
+         });
+    }
+   
 })
 
 app.get("/coffee/list-imgs",async (req, res) => {
