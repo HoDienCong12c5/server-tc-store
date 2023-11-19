@@ -60,7 +60,7 @@ app.get("/bill/:idUser",async (req, res) => {
         ob.price=dataDetail.price
         ob.imageOther=dataDetail.imageOther
         ob.name=dataDetail.name
-
+        ob.typeProduct=dataDetail.typeProduct
         return  ob
     })) 
    const dataProcess=processQuery(arr,req.query)
