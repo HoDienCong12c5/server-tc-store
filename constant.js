@@ -3,7 +3,7 @@ const FB={
     imageProduct:'ImageProduct',
     comment:'CommentUser',
     coffee:'Coffee',
-    build:'Build',
+    bill:'Bill',
     otherHome:'OtherHome',
     typeProduct:'TypeProduct',
     user:'user',

@@ -104,6 +104,7 @@ const FirebaseFun = (nameData, path = "") => {
 const FBCoffee = FirebaseFun(FB.coffee);
 const FBUser = FirebaseFun(FB.user);
 const FBCart = FirebaseFun(FB.cart);
+const FBBill = FirebaseFun(FB.bill);
 const FBComment = FirebaseFun(FB.comment);
 const FBImgProduct = FirebaseFun(FB.imageProduct);
 const FBTypeProduct = FirebaseFun(FB.typeProduct);
@@ -117,4 +118,5 @@ module.exports = {
   FBImgProduct,
   FBTypeProduct,
   FBProductShop,
+  FBBill
 };

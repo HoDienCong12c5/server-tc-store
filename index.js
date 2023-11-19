@@ -1,5 +1,5 @@
 const express = require("express");
-const { FBCoffee, FBImgProduct, FBCart, FBTypeProduct, FBProductShop } = require("./firebaseFun");
+const { FBCoffee, FBImgProduct, FBCart, FBTypeProduct, FBProductShop, FBBill } = require("./firebaseFun");
 const {BigNumber} = require("bignumber.js");
 const { processQuery } = require("./function");
 const cors = require("cors");
@@ -42,6 +42,19 @@ app.get("/all-coffee",async (req, res) => {
     });
 })
 
+app.get("/bill/:idUser",async (req, res) => { 
+    const data=await FBBill.getDataByQuery(
+        'idUser',
+        '==',
+        req.params.idUser
+    )
+
+   const dataProcess=processQuery(data,req.query)
+    res.send({
+       ...dataProcess,
+        status:200
+    });
+})
 app.get("/all-product",async (req, res) => { 
     console.log({req:req.query});
     if(Object.keys(req.query).length>0){
@@ -86,6 +99,8 @@ app.get("/all-product",async (req, res) => {
     }
    
 })
+
+
 
 app.get("/coffee/list-imgs",async (req, res) => {
     const data=await FBImgProduct.getAllData()
