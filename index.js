@@ -48,8 +48,8 @@ app.get("/bill/:idUser",async (req, res) => {
         '==',
         req.params.idUser
     )
-    let dataClone=cloneData(data)
-    const arr=await Promise.all(dataClone.map(async(item)=>{
+    
+    const arr=await Promise.all(data.map(async(item)=>{
         const ob={...item}
         const dataDetail=await FBProductShop.getDataByID(item.idProduct)
 
@@ -59,6 +59,7 @@ app.get("/bill/:idUser",async (req, res) => {
         ob.keyName=dataDetail.keyName
         ob.price=dataDetail.price
         ob.imageOther=dataDetail.imageOther
+        ob.name=dataDetail.name
 
         return  ob
     })) 
