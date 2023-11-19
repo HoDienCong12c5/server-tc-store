@@ -1,7 +1,7 @@
 const express = require("express");
 const { FBCoffee, FBImgProduct, FBCart, FBTypeProduct, FBProductShop, FBBill } = require("./firebaseFun");
 const {BigNumber} = require("bignumber.js");
-const { processQuery } = require("./function");
+const { processQuery, cloneData } = require("./function");
 const cors = require("cors");
 
 const app = express();
@@ -48,8 +48,21 @@ app.get("/bill/:idUser",async (req, res) => {
         '==',
         req.params.idUser
     )
+    let dataClone=cloneData(data)
+    const arr=await Promise.all(dataClone.map(async(item)=>{
+        const ob={...item}
+        const dataDetail=await FBProductShop.getDataByID(item.idProduct)
 
-   const dataProcess=processQuery(data,req.query)
+        ob.imageMain=dataDetail.imageMain
+        ob.linkShoppe=dataDetail.linkShoppe
+        ob.linkFacebook=dataDetail.linkFacebook
+        ob.keyName=dataDetail.keyName
+        ob.price=dataDetail.price
+        ob.imageOther=dataDetail.imageOther
+
+        return  ob
+    })) 
+   const dataProcess=processQuery(arr,req.query)
     res.send({
        ...dataProcess,
         status:200

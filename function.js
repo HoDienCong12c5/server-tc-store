@@ -35,6 +35,8 @@ const processQuery=(data,query)=>{
         page,  
     }
 }
+const cloneData = (data) => JSON.parse(JSON.stringify(data||''))
 module.exports={
-    processQuery
+    processQuery,
+    cloneData
 }
