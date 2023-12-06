@@ -77,6 +77,43 @@ app.get("/bill/:sdtUser",async (req, res) => {
 })
 
 
+app.get("/all-bill/:isUser",async (req, res) => { 
+    const data=await FBBill.getDataByQuery(
+        'isUser',
+        '==',
+        req.params.isUser
+    )
+
+    const listKeyName=[]
+    data.forEach(e=>listKeyName.push(e.keyNameProduct))
+
+    const listProduct=await FBProductShop.getDataByQuery('keyName','in',listKeyName)
+ 
+
+    const arr=data.map((item)=>{
+        const ob={...item}
+
+        const dataDetail=listProduct.find(e=>e.keyName===item.keyNameProduct)
+
+        ob.imageMain=dataDetail?.imageMain||''
+        ob.linkShoppe=dataDetail?.linkShoppe
+        ob.linkFacebook=dataDetail?.linkFacebook
+        ob.keyName=dataDetail.keyName
+        ob.price=dataDetail.price
+         ob.name=dataDetail.name
+        ob.typeProduct=dataDetail.typeProduct
+
+        return  ob
+    })
+
+   const dataProcess=processQuery(arr,req.query)
+    res.send({
+       ...dataProcess,
+        status:200
+    });
+})
+
+
 app.get("/all-bill",async (req, res) => { 
     const data=await FBBill.getAllData()
 
