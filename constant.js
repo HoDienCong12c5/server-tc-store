@@ -1,5 +1,5 @@
 const FB={
-    cart:'Cart',
+    cart:'CartUser',
     imageProduct:'ImageProduct',
     comment:'CommentUser',
     coffee:'Coffee',
@@ -10,6 +10,20 @@ const FB={
     'productShop':'ProductShop'
 }
 
+const FB_MATCH={
+    '<': '<',
+  '>': '>',
+  '==': '==',
+  '<=': '<=',
+  '>=': '>=',
+  '!=': '!=',
+  in: 'in',
+  'array-contains': 'array-contains',
+  'array-contains-any': 'array-contains-any',
+  'not-in': 'not-in'
+}
+
 module.exports={
-    FB
+    FB,
+    FB_MATCH
 }
