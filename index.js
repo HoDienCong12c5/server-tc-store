@@ -131,9 +131,8 @@ app.get("/all-bill/:isUser", async (req, res) => {
 })
 
 app.get("/all-cart/:idUser", async (req, res) => {
-    console.log({params:req.params});
     const data = await FBCart.getDataByQuery('idUser',FB_MATCH["=="],req.params.idUser)
-  console.log({data});
+
     if (data?.length === 0) {
         res.send({
           data: [],
@@ -175,6 +174,22 @@ app.get("/all-cart/:idUser", async (req, res) => {
       ...dataProcess,
       status: 200,
     });
+  });
+
+app.get("/length-cart/:idUser", async (req, res) => {
+    try {
+    const data = await FBCart.getDataByQuery('idUser',FB_MATCH["=="],req.params.idUser)
+
+      res.send({
+        lengthCart: data?.length||0, 
+        status: 200,
+      });
+    } catch (error) {
+      res.sendStatus(500).send({
+        lengthCart:0,  
+      });
+    }
+
   });
 
 app.get("/all-bill", async (req, res) => {
