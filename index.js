@@ -84,7 +84,7 @@ app.get("/bill/:sdtUser", async (req, res) => {
 });
 
 app.get("/all-bill/:isUser", async (req, res) => {
-  const data = await FBBill.getDataByQuery("isUser", "==", req.params.isUser);
+  const data = await FBBill.getDataByQuery("idUser", "==", req.params.isUser);
  
   if (data?.length === 0) {
     res.send({
